@@ -1,42 +1,40 @@
 //identify elements
 let inputText = document.querySelector('#textInput input')
 let addButton= document.querySelector('#inputButton #add')
-let taskList= document.querySelector("#taskList #wholeList")
+let taskList= document.querySelector("#taskList")
 let deleteAll = document.querySelector("#inputButton #deleteAll")
 let erase= document.querySelector("#inputButton #delete")
-// console.log(erase)
+// console.log(inputText)
 
 //add item to task list
 addButton.addEventListener('click', ()=> {
-    let newItem = document.createElement('input')
-    let label = document.createElement('label')
-    label.innerText=inputText.value
-    label.setAttribute('name', 'task')
-    // newItem.className = "item active"
-    newItem.setAttribute('name', 'task')
-    newItem.setAttribute('type', 'checkbox')
-    // newItem.setAttribute('type', 'checkbox')
-    // newItem.value = inputText.value
-    // console.log(newItem)
-    // newItem.innerText = inputText.value
-    // console.log(newItem)
+    //create and add checkbox and set name as label value
+    let newItem = document.createElement('div')
+    newItem.className = "task"
+    newItem.innerHTML=`
+    <input type="checkbox" id="${inputText.value}" name ="${inputText.value}"/>
+    <label for="${inputText.value}">${inputText.value}</label>
+    `
+    //add div to parent
     taskList.appendChild(newItem)
-    taskList.appendChild(label)
+    // console.log(taskList)
     //identify every item in list
-    let toDo = document.querySelectorAll('input[name="task"]')
-    console.log(toDo)
+    let toDo = document.querySelectorAll('.task')
+    // console.log(toDo)
     erase.addEventListener('click', ()=> {
-        for(let task of toDo) {
-            if(task.checked) {
-                task.remove()
-                task.value=""
+        for(let box of toDo) {
+            //specifically select input and see if its checked
+            if (box.querySelector("input").checked) {
+                box.remove()
             }
         }
     })
-    // for(let item of toDo) {
-        
-    // }
-    // console.log(toDo)
+    deleteAll.addEventListener('click', ()=> {
+        for(let task of toDo) {
+            task.remove()
+        }
+    })
+    
 })
 
 // console.log(toDo)
